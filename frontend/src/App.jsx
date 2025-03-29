@@ -2,24 +2,29 @@ import React from 'react';
 import PhotoListItem from './components/PhotoListItem';
 import './App.scss';
 
-const sampleDataForPhotoListItem = {
-  id: "1",
+const photos = new Array(3).fill({
   location: {
     city: "Montreal",
     country: "Canada",
   },
-  imageSource: "/Image-1-Regular.jpeg",  // Ensure the image is in the public/ folder
-  username: "Joe Example",
-  profile: "/profile-1.jpg",  // Ensure the profile image is in the public/ folder
-};
+}).map((photo, index) => ({
+  ...photo,
+  id: (index + 1).toString(),
+  username: `User ${index + 1}`,
+  imageSource: `/Image-${index + 1}-Regular.jpeg`,
+  profile: `/profile-${index + 1}.jpg`,
+}));
 
 const App = () => (
   <div className="App">
-    <PhotoListItem photo={sampleDataForPhotoListItem} />
+    {photos.map(photo => (
+      <PhotoListItem key={photo.id} photo={photo} />
+    ))}
   </div>
 );
 
 export default App;
+
 
 
 
