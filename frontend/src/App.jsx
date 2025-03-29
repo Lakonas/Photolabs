@@ -15,8 +15,8 @@ const sampleDataForPhotoListItem = {
 const App = () => {
   const photos = [
     { ...sampleDataForPhotoListItem, id: "1", username: "Joe Example", imageSource: "/Image-1-Regular.jpeg" },
-    { ...sampleDataForPhotoListItem, id: "2", username: "Jane Example", imageSource: "/Image-2-Regular.jpeg" },
-    { ...sampleDataForPhotoListItem, id: "3", username: "John Example", imageSource: "/Image-3-Regular.jpeg" }
+    { ...sampleDataForPhotoListItem, id: "1", username: "Joe Example", imageSource: "/Image-1-Regular.jpeg" },
+    { ...sampleDataForPhotoListItem, id: "1", username: "Joe Example", imageSource: "/Image-1-Regular.jpeg" }
   ];
 
   return (

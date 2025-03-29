@@ -1,20 +1,14 @@
 import React from 'react';
-import "../styles/PhotoListItem.scss"; // Importing the provided Sass file
+import '../styles/PhotoListItem.scss';
+import PhotoFavButton from './PhotoFavButton';
 
 const PhotoListItem = ({ photo }) => {
   return (
-    <div className="photo-list__item" key={photo.id}>
-      <img 
-        src={photo.imageSource} 
-        alt={photo.username} 
-        className="photo-list__image" // Applying the provided Sass class for image
-      />
+    <div className="photo-list__item">
+      <PhotoFavButton />
+      <img src={photo.imageSource} alt={photo.username} className="photo-list__image" />
       <div className="photo-list__user-details">
-        <img 
-          src={photo.profile} 
-          alt={photo.username} 
-          className="photo-list__user-profile" // Applying the provided Sass class for profile
-        />
+        <img src={photo.profile} alt={photo.username} className="photo-list__user-profile" />
         <div className="photo-list__user-info">
           <div>{photo.username}</div>
           <div className="photo-list__user-location">
