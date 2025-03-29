@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import '../styles/PhotoFavButton.scss';
 
-const PhotoFavButton = ({ photo }) => {
+const PhotoFavButton = () => {
   const [isFavorited, setIsFavorited] = useState(false);
 
   const handleClick = () => {
-    setIsFavorited(!isFavorited);
+    setIsFavorited(prevState => !prevState);
   };
 
   return (
