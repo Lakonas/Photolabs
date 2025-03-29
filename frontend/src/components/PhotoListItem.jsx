@@ -1,16 +1,16 @@
 import React from 'react';
 import "../styles/PhotoListItem.scss";
 
-const PhotoListItem = ({ id, imageSource, username, profile, location }) => {
+const PhotoListItem = ({ photo }) => {
   return (
-    <div className="photo-list__item" key={id}>
-      <img src={imageSource} alt={username} className="photo-list__image" />
+    <div className="photo-list__item" key={photo.id}>
+      <img src={photo.imageSource} alt={photo.username} className="photo-list__image" />
       <div className="photo-list__user-details">
-        <img src={profile} alt={username} className="photo-list__user-profile" />
+        <img src={photo.profile} alt={photo.username} className="photo-list__user-profile" />
         <div className="photo-list__user-info">
-          <div>{username}</div>
+          <div>{photo.username}</div>
           <div className="photo-list__user-location">
-            {location.city}, {location.country}
+            {photo.location.city}, {photo.location.country}
           </div>
         </div>
       </div>
@@ -19,6 +19,7 @@ const PhotoListItem = ({ id, imageSource, username, profile, location }) => {
 };
 
 export default PhotoListItem;
+
 
 
 

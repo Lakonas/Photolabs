@@ -8,23 +8,18 @@ const sampleDataForPhotoListItem = {
     city: "Montreal",
     country: "Canada",
   },
-  imageSource: `${process.env.PUBLIC_URL}/Image-1-Regular.jpeg`,
+  imageSource: "/Image-1-Regular.jpeg",  // Ensure the image is in the public/ folder
   username: "Joe Example",
-  profile: `${process.env.PUBLIC_URL}/profile-1.jpg`,
+  profile: "/profile-1.jpg",  // Ensure the profile image is in the public/ folder
 };
 
 const App = () => (
   <div className="App">
-    <PhotoListItem 
-      id={sampleDataForPhotoListItem.id}
-      location={sampleDataForPhotoListItem.location}
-      imageSource={sampleDataForPhotoListItem.imageSource}
-      username={sampleDataForPhotoListItem.username}
-      profile={sampleDataForPhotoListItem.profile}
-    />
+    <PhotoListItem photo={sampleDataForPhotoListItem} />
   </div>
 );
 
 export default App;
+
 
 
