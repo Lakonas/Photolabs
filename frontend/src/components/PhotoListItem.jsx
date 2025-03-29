@@ -1,5 +1,5 @@
 import React from 'react';
-import "../styles/PhotoListItem.scss";
+import "../styles/PhotoListItem.scss"; // Importing the provided Sass file
 
 const PhotoListItem = ({ photo }) => {
   return (
@@ -7,15 +7,13 @@ const PhotoListItem = ({ photo }) => {
       <img 
         src={photo.imageSource} 
         alt={photo.username} 
-        className="photo-list__image" 
-        style={{ border: "3px solid #ccc" }} 
+        className="photo-list__image" // Applying the provided Sass class for image
       />
       <div className="photo-list__user-details">
         <img 
           src={photo.profile} 
           alt={photo.username} 
-          className="photo-list__user-profile"
-          style={{ border: "2px solid #555" }} 
+          className="photo-list__user-profile" // Applying the provided Sass class for profile
         />
         <div className="photo-list__user-info">
           <div>{photo.username}</div>
