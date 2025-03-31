@@ -1,9 +1,13 @@
 import React from "react";
-import "../styles/PhotoListItem.scss"; 
+import "../styles/PhotoListItem.scss"; // Import styles
+import PhotoFavButton from "./PhotoFavButton"; // Import Favorite Button
 
 const PhotoListItem = ({ photo }) => {
   return (
     <div className="photo-list__item">
+      {/* Favorite button positioned inside the item */}
+      <PhotoFavButton />
+
       <img className="photo-list__image" src={photo.urls.regular} alt={`Photo by ${photo.user.name}`} />
 
       <div className="photo-list__user-details">
