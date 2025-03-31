@@ -1,7 +1,7 @@
 import React from "react";
-import TopicList from "./TopicList"; // Import the TopicList component
-import FavBadge from "./FavBadge"; // Import the FavBadge component
-import "../styles/TopNavigationBar.scss"; // Assuming the CSS file is correct
+import TopicList from "./TopicList"; 
+import FavBadge from "./FavBadge"; 
+import "../styles/TopNavigationBar.scss"; 
 
 const TopNavigationBar = ({ topics }) => {
   return (
