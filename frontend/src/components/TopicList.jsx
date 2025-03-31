@@ -3,11 +3,12 @@ import TopicListItem from './TopicListItem'; // Import TopicListItem component
 import '../styles/TopicList.scss'; // Import styles
 
 const topics = [
-  { id: 1, title: "People" },
   { id: 2, title: "Nature" },
   { id: 3, title: "Travel" },
-  { id: 4, title: "Fashion" },
-  { id: 5, title: "Animals" },
+  { id: 1, title: "People" },
+  
+  
+ 
 ];
 
 const TopicList = () => {
