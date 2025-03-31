@@ -1,17 +1,18 @@
-import React, { useState } from 'react';
-import FavBadge from './FavBadge'; // Import the FavBadge component
-import '../styles/TopNavigationBar.scss'; // Import the styles
+import React from 'react';
+import TopicList from './TopicList'; 
+import FavBadge from './FavBadge'; 
+import '../styles/TopNavigationBar.scss'; 
 
-const TopNavigationBar = () => {
-  // Manage the state for favorite photos
-  const [isFavPhotoExist, setIsFavPhotoExist] = useState(false);
-
+const TopNavigationBar = ({ hasFavorites }) => {
   return (
     <div className="top-nav-bar">
       <span className="top-nav-bar__logo">PhotoLabs</span>
+      
+      {/* Topic Navigation */}
+      <TopicList />
 
-      {/* Display FavBadge with the alert if there's a favorite photo */}
-      <FavBadge isFavPhotoExist={isFavPhotoExist} />
+      {/* Display FavBadge if favorites exist */}
+      <FavBadge isFavPhotoExist={hasFavorites} />
     </div>
   );
 };

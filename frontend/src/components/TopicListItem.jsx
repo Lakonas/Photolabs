@@ -1,5 +1,4 @@
-import React from "react";
-import "../styles/TopicListItem.scss";
+import React from 'react';
 
 const TopicListItem = ({ label }) => {
   return (
@@ -7,11 +6,6 @@ const TopicListItem = ({ label }) => {
       <span>{label}</span>
     </div>
   );
-};
-
-// Default props (in case no label is provided)
-TopicListItem.defaultProps = {
-  label: "Default Topic",
 };
 
 export default TopicListItem;

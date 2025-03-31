@@ -1,5 +1,7 @@
 import React from 'react';
-import '../styles/FavIcon.scss'; // Import the icon styles
+import "../styles/PhotoFavButton.scss";
+
+
 
 const FavIcon = ({ displayAlert }) => {
   return (
