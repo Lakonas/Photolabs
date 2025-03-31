@@ -1,18 +1,18 @@
-import React from 'react';
-import TopicList from './TopicList'; 
-import FavBadge from './FavBadge'; 
-import '../styles/TopNavigationBar.scss'; 
+import React from "react";
+import TopicList from "./TopicList"; 
+import FavBadge from "./FavBadge"; 
+import "../styles/TopNavigationBar.scss"; 
 
-const TopNavigationBar = ({ hasFavorites }) => {
+const TopNavigationBar = () => {
   return (
     <div className="top-nav-bar">
       <span className="top-nav-bar__logo">PhotoLabs</span>
-      
-      {/* Topic Navigation */}
+
+      {}
       <TopicList />
 
-      {/* Display FavBadge if favorites exist */}
-      <FavBadge isFavPhotoExist={hasFavorites} />
+      {}
+      <FavBadge />
     </div>
   );
 };
