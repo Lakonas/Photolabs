@@ -1,17 +1,17 @@
 import React from "react";
-import "../styles/TopicListItem.scss"; // Import styles
+import "../styles/TopicListItem.scss";
 
 const TopicListItem = ({ label }) => {
   return (
-    <li className="topic-list__item">
+    <div className="topic-list__item">
       <span>{label}</span>
-    </li>
+    </div>
   );
 };
 
-
+// Default props (in case no label is provided)
 TopicListItem.defaultProps = {
-  label: "Nature",
+  label: "Default Topic",
 };
 
 export default TopicListItem;

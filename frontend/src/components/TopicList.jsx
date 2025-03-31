@@ -1,4 +1,5 @@
 import React from "react";
+import TopicListItem from "./TopicListItem"; // Import the TopicListItem component
 import "../styles/TopicList.scss";
 
 // Sample data for topics
@@ -14,9 +15,7 @@ const TopicList = () => {
   return (
     <div className="top-nav-bar__topic-list">
       {sampleDataForTopicList.map((topic) => (
-        <div key={topic.id} className="topic-list__item">
-          <span>{topic.title}</span>
-        </div>
+        <TopicListItem key={topic.id} label={topic.title} />
       ))}
     </div>
   );
