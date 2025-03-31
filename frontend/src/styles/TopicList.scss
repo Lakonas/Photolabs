@@ -1,7 +1,24 @@
 .top-nav-bar__topic-list {
   display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  margin-right: 24px;
+  justify-content: center; 
+  align-items: center; 
+  flex-wrap: wrap; 
+  padding: 10px 0; 
+  gap: 15px; 
+}
+
+.topic-list__item {
+  margin: 0; 
+}
+
+.topic-list__item span {
+  font-size: 18px;
+  font-weight: 500;
+  color: #2b2b2b;
+  text-decoration: none;
+  
+  &:hover {
+    text-decoration: overline;
+    color: #111;
+  }
 }

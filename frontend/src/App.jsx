@@ -1,14 +1,17 @@
-import React from 'react';
+import React from "react";
+import TopicList from "./components/TopicList"; // Import TopicList
+import PhotoList from "./components/PhotoList"; // Import PhotoList
 
- // import PhotoListItem from './components/PhotoListItem';
- import PhotoList from './components/PhotoList';
- import './App.scss';
-
- const App = () => (
-   <div className="App">
-     {/* { Array.from(Array(3)).map((_, index) => <PhotoListItem key={index}/>) } */}
-     <PhotoList/>
-   </div>
- )
+const App = () => {
+  return (
+    <div className="App">
+      {/* Render Topic List as Navigation */}
+      <TopicList />
+      
+      {/* Render Photos Below */}
+      <PhotoList />
+    </div>
+  );
+};
 
 export default App;
