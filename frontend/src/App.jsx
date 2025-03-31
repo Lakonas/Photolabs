@@ -1,31 +1,14 @@
 import React from 'react';
-import PhotoListItem from './components/PhotoListItem';
-import './App.scss';
 
-const sampleDataForPhotoListItem = {
-  location: {
-    city: "Montreal",
-    country: "Canada",
-  },
-  imageSource: "/Image-1-Regular.jpeg",
-  username: "Joe Example",
-  profile: "/profile-1.jpg",
-};
+ // import PhotoListItem from './components/PhotoListItem';
+ import PhotoList from './components/PhotoList';
+ import './App.scss';
 
-const App = () => {
-  const photos = [
-    { ...sampleDataForPhotoListItem, id: "1", username: "Joe Example", imageSource: "/Image-1-Regular.jpeg" },
-    { ...sampleDataForPhotoListItem, id: "1", username: "Joe Example", imageSource: "/Image-1-Regular.jpeg" },
-    { ...sampleDataForPhotoListItem, id: "1", username: "Joe Example", imageSource: "/Image-1-Regular.jpeg" }
-  ];
-
-  return (
-    <div className="App">
-      {photos.map((photo) => (
-        <PhotoListItem key={photo.id} photo={photo} />
-      ))}
-    </div>
-  );
-};
+ const App = () => (
+   <div className="App">
+     {/* { Array.from(Array(3)).map((_, index) => <PhotoListItem key={index}/>) } */}
+     <PhotoList/>
+   </div>
+ )
 
 export default App;
