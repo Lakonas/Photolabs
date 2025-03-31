@@ -1,15 +1,17 @@
-import React from "react";
-import TopNavigationBar from "../components/TopNavigationBar";  // Import TopNavigationBar
-import PhotoList from "../components/PhotoList";  // Import PhotoList
-import "../styles/HomeRoute.scss";
+import React from 'react';
+import TopNavigationBar from '../components/TopNavigationBar'; // Import TopNavigationBar component
+import PhotoList from '../components/PhotoList'; // Import PhotoList component
+import photos from '../mocks/photos'; // Assuming mock data for photos
+import topics from '../mocks/topics'; // Assuming mock data for topics
+import '../styles/HomeRoute.scss'; // Import HomeRoute styles
 
-const HomeRoute = ({ photos, topics }) => {
+const HomeRoute = () => {
   return (
     <div className="home-route">
-      {/* Pass topics to the TopNavigationBar */}
+      {/* Pass topics as props to TopNavigationBar */}
       <TopNavigationBar topics={topics} />
-      
-      {/* Pass photos to the PhotoList */}
+
+      {/* Render PhotoList with photos passed as props */}
       <PhotoList photos={photos} />
     </div>
   );
