@@ -1,12 +1,12 @@
 import React from "react";
-import PhotoFavButton from "./PhotoFavButton"; // Import Favorite Button
-import "../styles/PhotoListItem.scss"; // Import styles
+import PhotoFavButton from "./PhotoFavButton"; 
+import "../styles/PhotoListItem.scss"; 
 
-const PhotoListItem = ({ photo, favoritePhotos, toggleFavorite }) => {
+const PhotoListItem = ({ photo, favoritePhotos, toggleFavorite, openModal }) => {
   const isFavorited = favoritePhotos.includes(photo.id);
 
   return (
-    <div className="photo-list__item">
+    <div className="photo-list__item" onClick={() => openModal(photo)}>
       <PhotoFavButton 
         isFavorited={isFavorited} 
         toggleFavorite={() => toggleFavorite(photo.id)} 
