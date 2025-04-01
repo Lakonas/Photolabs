@@ -1,15 +1,9 @@
-import React, { useState } from 'react';
-import '../styles/PhotoFavButton.scss';
+import React from "react";
+import "../styles/PhotoFavButton.scss"; // Import styles
 
-const PhotoFavButton = () => {
-  const [isFavorited, setIsFavorited] = useState(false);
-
-  const handleClick = () => {
-    setIsFavorited(prevState => !prevState);
-  };
-
+const PhotoFavButton = ({ isFavorited, toggleFavorite }) => {
   return (
-    <div className="photo-list__fav-icon" onClick={handleClick}>
+    <div className="photo-list__fav-icon" onClick={toggleFavorite}>
       <div className="photo-list__fav-icon-svg">
         <svg
           xmlns="http://www.w3.org/2000/svg"

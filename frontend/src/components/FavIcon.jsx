@@ -1,12 +1,8 @@
 import React from 'react';
-import "../styles/PhotoFavButton.scss";
-
-
 
 const FavIcon = ({ displayAlert }) => {
   return (
     <div className={`fav-icon ${displayAlert ? 'alert' : ''}`}>
-      {/* Your SVG or icon goes here */}
       <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"

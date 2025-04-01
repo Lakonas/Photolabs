@@ -1,14 +1,12 @@
-import React from 'react';
-import FavIcon from './FavIcon'; 
-import '../styles/FavBadge.scss'; 
+import React from "react";
+import "../styles/FavBadge.scss"; // Import styles
 
-const FavBadge = () => {
+const FavBadge = ({ count }) => {
   return (
     <div className="fav-badge">
-      <FavIcon /> {}
+      {count > 0 && <span className="fav-badge__count">{count}</span>}
     </div>
   );
 };
 
 export default FavBadge;
-

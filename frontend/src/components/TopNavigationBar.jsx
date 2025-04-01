@@ -1,18 +1,18 @@
 import React from "react";
 import TopicList from "./TopicList"; 
-import FavBadge from "./FavBadge"; 
+import FavIcon from "./FavIcon";  // Import the FavIcon component
 import "../styles/TopNavigationBar.scss"; 
 
-const TopNavigationBar = ({ topics }) => {
+const TopNavigationBar = ({ topics, favoritePhotos }) => {
+  const hasFavorites = favoritePhotos.length > 0;
+
   return (
     <div className="top-nav-bar">
       <span className="top-nav-bar__logo">PhotoLabs</span>
-
-      {/* Pass the topics as props to TopicList */}
       <TopicList topics={topics} />
-
-      {/* Render FavBadge here */}
-      <FavBadge />
+      
+      {/* Render FavIcon with conditionally rendered alert based on favorite photos */}
+      <FavIcon displayAlert={hasFavorites} />
     </div>
   );
 };
