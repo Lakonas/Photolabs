@@ -34,9 +34,43 @@ const App = () => {
       />
 
       {selectedPhoto && (
-        <div className="photo-details-modal-overlay" onClick={closeModal}>
-          <div className="photo-details-modal" onClick={(e) => e.stopPropagation()}>
-            <img src={selectedPhoto.urls.full} alt={`Photo by ${selectedPhoto.user.name}`} />
+        <div 
+          className="photo-details-modal-overlay" 
+          onClick={closeModal}
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            backgroundColor: "rgba(0, 0, 0, 0.5)",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            zIndex: 999
+          }}
+        >
+          <div 
+            className="photo-details-modal" 
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              backgroundColor: "white",
+              padding: "20px",
+              borderRadius: "8px",
+              maxWidth: "80%",
+              maxHeight: "80%",
+              overflow: "auto"
+            }}
+          >
+            <img 
+              src={selectedPhoto.urls.full} 
+              alt={`Photo by ${selectedPhoto.user.name}`} 
+              style={{
+                width: "100%",
+                height: "auto",
+                borderRadius: "8px"
+              }}
+            />
             <div>{selectedPhoto.user.name}</div>
             <div>{selectedPhoto.location.city}, {selectedPhoto.location.country}</div>
             {/* Additional modal content */}
