@@ -9,10 +9,19 @@ const TopNavigationBar = ({ topics, favoritePhotos }) => {
   return (
     <div className="top-nav-bar">
       <span className="top-nav-bar__logo">PhotoLabs</span>
+      
+      {/* Render TopicList */}
       <TopicList topics={topics} />
       
-      {/* Render FavIcon with conditionally rendered alert based on favorite photos */}
+      {/* Render FavIcon */}
       <FavIcon displayAlert={hasFavorites} />
+
+      {/* Conditional notification when there are favorited photos */}
+      {hasFavorites && (
+        <div className="top-nav-bar__notification">
+          You have favorited photos!
+        </div>
+      )}
     </div>
   );
 };
