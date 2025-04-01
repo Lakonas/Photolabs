@@ -1,9 +1,11 @@
 import React from "react";
 import TopicList from "./TopicList"; 
 import FavIcon from "./FavIcon";  // Import the FavIcon component
+import FavBadge from "./FavBadge";  // Import the FavBadge component
 import "../styles/TopNavigationBar.scss"; 
 
 const TopNavigationBar = ({ topics, favoritePhotos }) => {
+  // Derive hasFavorites from favoritePhotos
   const hasFavorites = favoritePhotos.length > 0;
 
   return (
@@ -15,13 +17,9 @@ const TopNavigationBar = ({ topics, favoritePhotos }) => {
       
       {/* Render FavIcon */}
       <FavIcon displayAlert={hasFavorites} />
-
-      {/* Conditional notification when there are favorited photos */}
-      {hasFavorites && (
-        <div className="top-nav-bar__notification">
-          You have favorited photos!
-        </div>
-      )}
+      
+      {/* Render FavBadge with isFavPhotoExist */}
+      <FavBadge isFavPhotoExist={hasFavorites} />
     </div>
   );
 };

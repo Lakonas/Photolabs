@@ -1,19 +1,17 @@
 import React, { useState } from "react";
 import HomeRoute from "./routes/HomeRoute";
-import photos from './mocks/photos';  // Import mock photos data
-import topics from './mocks/topics';  // Import mock topics data
+import photos from './mocks/photos'; // Import mock photos data
+import topics from './mocks/topics'; // Import mock topics data
 
 const App = () => {
   const [favoritePhotos, setFavoritePhotos] = useState([]);
 
   const toggleFavorite = (photoId) => {
-    setFavoritePhotos((prevFavorites) => {
-      if (prevFavorites.includes(photoId)) {
-        return prevFavorites.filter(id => id !== photoId);
-      } else {
-        return [...prevFavorites, photoId];
-      }
-    });
+    setFavoritePhotos(prevState => 
+      prevState.includes(photoId)
+        ? prevState.filter(id => id !== photoId)  // Remove from favorites
+        : [...prevState, photoId]  // Add to favorites
+    );
   };
 
   return (
@@ -22,7 +20,7 @@ const App = () => {
         photos={photos} 
         topics={topics} 
         favoritePhotos={favoritePhotos} 
-        toggleFavorite={toggleFavorite} 
+        toggleFavorite={toggleFavorite}  // Pass toggleFavorite function
       />
     </div>
   );

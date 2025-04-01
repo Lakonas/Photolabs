@@ -1,10 +1,14 @@
 import React from "react";
-import "../styles/FavBadge.scss"; // Import styles
+import "../styles/FavBadge.scss";
 
-const FavBadge = ({ count }) => {
+const FavBadge = ({ isFavPhotoExist }) => {
   return (
     <div className="fav-badge">
-      {count > 0 && <span className="fav-badge__count">{count}</span>}
+      {isFavPhotoExist && (
+        <div className="fav-badge__notification">
+          You have favorited photos!
+        </div>
+      )}
     </div>
   );
 };
