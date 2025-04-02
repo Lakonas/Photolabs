@@ -3,6 +3,7 @@ import '../styles/PhotoDetailsModal.scss';
 import closeSymbol from '../assets/closeSymbol.svg';
 
 const PhotoDetailsModal = ({ selectedPhoto, closeModal }) => { 
+  console.log("Selected Photo:", selectedPhoto);
   if (!selectedPhoto) return null; // If no photo is selected, don't render the modal
 
   return (
