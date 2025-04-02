@@ -15,7 +15,7 @@ const PhotoListItem = ({ photo, favoritePhotos, toggleFavorite, openModal }) => 
         className="photo-list__image" 
         src={photo.urls.regular} 
         alt={`Photo by ${photo.user.name}`} 
-        onClick={() => openModal(photo)}
+        onClick={() => openModal(photo)} // Open modal when clicked
       />
       <div className="photo-list__user-details">
         <img 

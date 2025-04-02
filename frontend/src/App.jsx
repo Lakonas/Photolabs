@@ -1,23 +1,27 @@
 import React, { useState } from "react";
 import HomeRoute from "./routes/HomeRoute";
-import photos from './mocks/photos'; // Import mock photos data
-import topics from './mocks/topics'; // Import mock topics data
-import PhotoDetailsModal from './routes/PhotoDetailsModal'; // Import PhotoDetailsModal
+import photos from './mocks/photos'; 
+import topics from './mocks/topics'; 
+import PhotoDetailsModal from './routes/PhotoDetailsModal'; 
 
 const App = () => {
   const [favoritePhotos, setFavoritePhotos] = useState([]);
-  const [selectedPhoto, setSelectedPhoto] = useState(null); // Added state to manage selected photo
+  const [selectedPhoto, setSelectedPhoto] = useState(null); 
 
   const toggleFavorite = (photoId) => {
     setFavoritePhotos(prevState => 
       prevState.includes(photoId)
-        ? prevState.filter(id => id !== photoId)  // Remove from favorites
-        : [...prevState, photoId]  // Add to favorites
+        ? prevState.filter(id => id !== photoId)  
+        : [...prevState, photoId]  
     );
   };
 
   const openModal = (photo) => {
-    setSelectedPhoto(photo); // Set selected photo when clicked
+    setSelectedPhoto(photo); 
+  };
+
+  const closeModal = () => {
+    setSelectedPhoto(null); 
   };
 
   return (
@@ -31,9 +35,9 @@ const App = () => {
       />
 
       {/* Only show the modal when a photo is selected */}
-      <PhotoDetailsModal 
-        selectedPhoto={selectedPhoto} 
-      />
+      {selectedPhoto && (
+        <PhotoDetailsModal selectedPhoto={selectedPhoto} closeModal={closeModal} /> 
+      )}
     </div>
   );
 };

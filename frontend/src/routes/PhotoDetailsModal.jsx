@@ -1,12 +1,19 @@
 import React from 'react';
 import '../styles/PhotoDetailsModal.scss';
+import closeSymbol from '../assets/closeSymbol.svg';
 
-const PhotoDetailsModal = ({ selectedPhoto }) => {
+const PhotoDetailsModal = ({ selectedPhoto, closeModal }) => { 
   if (!selectedPhoto) return null; // If no photo is selected, don't render the modal
 
   return (
     <div className="photo-details-modal-overlay">
       <div className="photo-details-modal">
+        
+        {/* Close button */}
+        <button className="photo-details-modal__close-button" onClick={closeModal}>
+          <img src={closeSymbol} alt="Close modal" />
+        </button>
+
         <div className="photo-details-modal__images">
           <img
             className="photo-details-modal__image"
