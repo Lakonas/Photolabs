@@ -34,7 +34,7 @@ const App = () => {
         openModal={openModal} 
       />
 
-      {/* Only show the modal when a photo is selected */}
+      {/* Show the modal only when a photo is selected */}
       {selectedPhoto && (
         <PhotoDetailsModal selectedPhoto={selectedPhoto} closeModal={closeModal} /> 
       )}

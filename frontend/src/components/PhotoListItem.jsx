@@ -6,7 +6,7 @@ const PhotoListItem = ({ photo, favoritePhotos, toggleFavorite, openModal }) => 
   const isFavorited = favoritePhotos.includes(photo.id);
 
   return (
-    <div className="photo-list__item" >
+    <div className="photo-list__item">
       <PhotoFavButton 
         isFavorited={isFavorited} 
         toggleFavorite={() => toggleFavorite(photo.id)} 
@@ -15,7 +15,7 @@ const PhotoListItem = ({ photo, favoritePhotos, toggleFavorite, openModal }) => 
         className="photo-list__image" 
         src={photo.urls.regular} 
         alt={`Photo by ${photo.user.name}`} 
-        onClick={() => openModal(photo)} // Open modal when clicked
+        onClick={() => openModal(photo)} // Open modal on click
       />
       <div className="photo-list__user-details">
         <img 
