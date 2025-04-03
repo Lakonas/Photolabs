@@ -5,6 +5,10 @@ import closeSymbol from '../assets/closeSymbol.svg';
 const PhotoDetailsModal = ({ selectedPhoto, closeModal }) => { 
   if (!selectedPhoto) return null; // If no photo is selected, don't render the modal
 
+  // Convert similar_photos object into an array
+  const similarPhotosArray = Object.values(selectedPhoto.similar_photos);
+  console.log("Converted Similar Photos Array:", similarPhotosArray, Array.isArray(similarPhotosArray));
+
   return (
     <div className="photo-details-modal-overlay">
       <div className="photo-details-modal">
@@ -24,7 +28,7 @@ const PhotoDetailsModal = ({ selectedPhoto, closeModal }) => {
 
           {/* Similar Photos Section */}
           <div className="photo-details-modal__similar-photos">
-            {Object.values(selectedPhoto.similar_photos).map((similarPhoto) => (
+            {similarPhotosArray.map((similarPhoto) => (
               <div key={similarPhoto.id} className="photo-details-modal__similar-photo-container">
                 <img
                   className="photo-details-modal__similar-photo"
