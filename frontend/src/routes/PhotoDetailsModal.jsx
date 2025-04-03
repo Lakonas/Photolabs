@@ -1,13 +1,11 @@
 import React from 'react';
 import '../styles/PhotoDetailsModal.scss';
 import closeSymbol from '../assets/closeSymbol.svg';
+import PhotoList from '../components/PhotoList'; // Import PhotoList
 
 const PhotoDetailsModal = ({ selectedPhoto, closeModal }) => { 
   if (!selectedPhoto) return null; // If no photo is selected, don't render the modal
-
-  // Convert similar_photos object into an array
-  const similarPhotosArray = Object.values(selectedPhoto.similar_photos);
-  console.log("Converted Similar Photos Array:", similarPhotosArray, Array.isArray(similarPhotosArray));
+  console.log("Similar Photos Data:", selectedPhoto.similar_photos, Array.isArray(selectedPhoto.similar_photos));
 
   return (
     <div className="photo-details-modal-overlay">
@@ -28,21 +26,10 @@ const PhotoDetailsModal = ({ selectedPhoto, closeModal }) => {
 
           {/* Similar Photos Section */}
           <div className="photo-details-modal__similar-photos">
-            {similarPhotosArray.map((similarPhoto) => (
-              <div key={similarPhoto.id} className="photo-details-modal__similar-photo-container">
-                <img
-                  className="photo-details-modal__similar-photo"
-                  src={similarPhoto.urls.regular}
-                  alt={`Similar photo from ${similarPhoto.location.city}`}
-                />
-                <div className="photo-details-modal__similar-photo-info">
-                  <div className="photo-details-modal__photographer-name">{similarPhoto.user.name}</div>
-                  <div className="photo-details-modal__photographer-location">
-                    {similarPhoto.location.city}, {similarPhoto.location.country}
-                  </div>
-                </div>
-              </div>
-            ))}
+            {/* Use PhotoList to render similar photos */}
+            <PhotoList 
+              photos={Object.values(selectedPhoto.similar_photos)} // Convert object to array
+            />
           </div>
         </div>
 

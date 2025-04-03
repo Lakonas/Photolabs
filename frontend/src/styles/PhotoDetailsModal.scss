@@ -54,28 +54,26 @@
 
 /* Grid for similar photos */
 .photo-details-modal__similar-photos {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 10px;
-  width: 95%;
+  display: flex;
+  gap: 5px; 
+  padding: 0;
+  margin: 100px;
+  margin-top:auto;
 }
 
-/* Container to wrap each similar photo + user photo */
+
 .photo-details-modal__similar-photo-container {
-  position: relative;
-  width: 100%;
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  align-items: center;  
+  justify-content: center; 
+  margin-bottom: 5px;
 }
 
 /* Square similar photos */
 .photo-details-modal__similar-photo {
-  width: 100%;
-  aspect-ratio: 1 / 1; // Ensures square shape
-  object-fit: cover;
-  border-radius: 8px;
-  position: relative;
+  width: 100%;  
+  height: 100%;  
+  object-fit: cover; 
 }
 
 /* User photo for similar photos */

@@ -3,7 +3,9 @@ import PhotoFavButton from "./PhotoFavButton";
 import "../styles/PhotoListItem.scss"; 
 
 const PhotoListItem = ({ photo, favoritePhotos, toggleFavorite, openModal }) => {
-  const isFavorited = favoritePhotos.includes(photo.id);
+  const isFavorited = (favoritePhotos || []).includes(photo.id);
+
+
 
   return (
     <div className="photo-list__item">
