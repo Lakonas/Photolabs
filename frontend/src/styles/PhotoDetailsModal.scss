@@ -40,6 +40,24 @@
   position: relative;
 }
 
+.photo-details-modal__top-bar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 16px;
+  margin-top: 8px;
+  align-items: center;
+}
+
+.photo-details-modal__photographer-details {
+  display: flex;
+  font-size: 16px;
+}
+
+.photo-details-modal__photographer-location {
+  color: #838383;
+}
+
 /* User photo for main image */
 .photo-details-modal__photographer-profile {
   position: absolute;
@@ -84,4 +102,13 @@
   width: 30px;
   height: 30px;
   border: 2px solid white;
+}
+
+.photo-details-modal__header {
+  font-size: 18px;
+  font-weight: 500;
+  color: #1e1e1e;
+  margin-top: 24px;
+  margin-bottom: 24px;
+  width: 90%;
 }
