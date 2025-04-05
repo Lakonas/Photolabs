@@ -23,3 +23,23 @@
     font-size: 16px;
   }
 }
+.fav-badge {
+  position: relative;
+  display: inline-block;
+}
+
+.fav-badge__icon {
+  width: 24px;
+  height: 24px;
+}
+
+.fav-badge__dot {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  width: 8px;
+  height: 8px;
+  background-color: #28c840; /* green */
+  border: 2px solid white;
+  border-radius: 50%;
+}

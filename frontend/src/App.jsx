@@ -30,7 +30,7 @@ const App = () => {
     <div className="App">
 
       {/* Global favorite notification icons */}
-      <FavIcon displayAlert={favoritePhotos.length > 0} />
+      
       <FavBadge isFavPhotoExist={favoritePhotos.length > 0} />
 
       <HomeRoute 
