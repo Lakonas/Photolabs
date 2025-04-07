@@ -4,7 +4,7 @@ import PhotoDetailsModal from './routes/PhotoDetailsModal';
 import FavBadge from './components/FavBadge';
 import photos from './mocks/photos';
 import topics from './mocks/topics';
-import useApplicationData from './hooks/useApplicationData'; // 👈 custom hook
+import useApplicationData from './hooks/useApplicationData'; 
 
 const App = () => {
   const {
@@ -16,8 +16,8 @@ const App = () => {
 
   return (
     <div className="App">
-      {/* Favorite notification icon (top right) */}
-      <FavBadge isFavPhotoExist={state.favoritePhotos.length > 0} />
+      
+    
 
       {/* Main homepage */}
       <HomeRoute

@@ -12,15 +12,12 @@ const PhotoDetailsModal = ({ selectedPhoto, closeModal, favoritePhotos, toggleFa
   return (
     <div className="photo-details-modal-overlay">
       <div className="photo-details-modal">
-
-        {/* Close button */}
         <button className="photo-details-modal__close-button" onClick={closeModal}>
           <img src={closeSymbol} alt="Close modal" />
         </button>
 
         <div className="photo-details-modal__images">
-
-          {/* Main Photo Card (image + photographer info) */}
+          {/* Main Photo Card */}
           <div className="photo-details-modal__main-photo-container">
             <div className="photo-details-modal__image">
               <PhotoFavButton
@@ -51,12 +48,13 @@ const PhotoDetailsModal = ({ selectedPhoto, closeModal, favoritePhotos, toggleFa
           </div>
 
           {/* Similar Photos Section */}
+          <h3 className="photo-details-modal__header">Similar Photos</h3>
           <div className="photo-details-modal__similar-photos">
             <PhotoList
               photos={Object.values(selectedPhoto.similar_photos)}
               favoritePhotos={favoritePhotos}
               toggleFavorite={toggleFavorite}
-              openModal={() => {}} // No-op for similar photos inside the modal
+              openModal={() => {}}
             />
           </div>
         </div>
