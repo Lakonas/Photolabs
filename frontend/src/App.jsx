@@ -1,53 +1,40 @@
-import React, { useState } from "react";
-import HomeRoute from "./routes/HomeRoute";
-import photos from './mocks/photos'; 
-import topics from './mocks/topics'; 
+import React from 'react';
+import HomeRoute from './routes/HomeRoute';
 import PhotoDetailsModal from './routes/PhotoDetailsModal';
-import FavIcon from './components/FavIcon'; // Make sure this path is correct
-import FavBadge from './components/FavBadge'; // Make sure this path is correct
+import FavBadge from './components/FavBadge';
+import photos from './mocks/photos';
+import topics from './mocks/topics';
+import useApplicationData from './hooks/useApplicationData'; // 👈 custom hook
 
 const App = () => {
-  const [favoritePhotos, setFavoritePhotos] = useState([]);
-  const [selectedPhoto, setSelectedPhoto] = useState(null); 
-
-  const toggleFavorite = (photoId) => {
-    setFavoritePhotos(prevState => 
-      prevState.includes(photoId)
-        ? prevState.filter(id => id !== photoId)
-        : [...prevState, photoId]
-    );
-  };
-
-  const openModal = (photo) => {
-    setSelectedPhoto(photo);
-  };
-
-  const closeModal = () => {
-    setSelectedPhoto(null);
-  };
+  const {
+    state,
+    onPhotoSelect,
+    updateToFavPhotoIds,
+    onClosePhotoDetailsModal
+  } = useApplicationData();
 
   return (
     <div className="App">
+      {/* Favorite notification icon (top right) */}
+      <FavBadge isFavPhotoExist={state.favoritePhotos.length > 0} />
 
-      {/* Global favorite notification icons */}
-      
-      <FavBadge isFavPhotoExist={favoritePhotos.length > 0} />
-
-      <HomeRoute 
+      {/* Main homepage */}
+      <HomeRoute
         photos={photos}
         topics={topics}
-        favoritePhotos={favoritePhotos}
-        toggleFavorite={toggleFavorite}
-        openModal={openModal}
+        favoritePhotos={state.favoritePhotos}
+        toggleFavorite={updateToFavPhotoIds}
+        openModal={onPhotoSelect}
       />
 
-      {/* Modal for photo details */}
-      {selectedPhoto && (
+      {/* Photo Details Modal */}
+      {state.selectedPhoto && (
         <PhotoDetailsModal
-          selectedPhoto={selectedPhoto}
-          closeModal={closeModal}
-          favoritePhotos={favoritePhotos}
-          toggleFavorite={toggleFavorite}
+          selectedPhoto={state.selectedPhoto}
+          closeModal={onClosePhotoDetailsModal}
+          favoritePhotos={state.favoritePhotos}
+          toggleFavorite={updateToFavPhotoIds}
         />
       )}
     </div>
