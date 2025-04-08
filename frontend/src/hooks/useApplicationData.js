@@ -1,4 +1,5 @@
-import { useReducer } from 'react';
+import { useEffect, useReducer } from 'react';
+import axios from 'axios';
 
 export const ACTIONS = {
   FAV_PHOTO_ADDED: 'FAV_PHOTO_ADDED',
@@ -12,8 +13,8 @@ export const ACTIONS = {
 const initialState = {
   favoritePhotos: [],
   selectedPhoto: null,
-  photos: [],
-  topics: []
+  photos: [],     // ✅ These are already in your state
+  topics: []      // ✅ These too
 };
 
 function reducer(state, action) {
@@ -62,6 +63,27 @@ function reducer(state, action) {
 const useApplicationData = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
+  useEffect(() => {
+    // Fetch PHOTOS
+    axios.get('/api/photos')
+      .then((response) => {
+        console.log("Fetched photo data:", response.data);
+        dispatch({ type: ACTIONS.SET_PHOTO_DATA, payload: { photos: response.data } });
+      })
+      .catch((error) => {
+        console.error('Error fetching photos:', error);
+      });
+
+    // Fetch TOPICS
+    axios.get('/api/topics')
+      .then((response) => {
+        dispatch({ type: ACTIONS.SET_TOPIC_DATA, payload: { topics: response.data } });
+      })
+      .catch((error) => {
+        console.error('Error fetching topics:', error);
+      });
+  }, []);
+
   const updateToFavPhotoIds = (photoId) => {
     const isFav = state.favoritePhotos.includes(photoId);
     dispatch({
@@ -77,7 +99,7 @@ const useApplicationData = () => {
   const onClosePhotoDetailsModal = () => {
     dispatch({ type: ACTIONS.DISPLAY_PHOTO_DETAILS });
   };
-
+ 
   return {
     state,
     updateToFavPhotoIds,

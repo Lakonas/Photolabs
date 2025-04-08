@@ -5,7 +5,7 @@ import '../styles/HomeRoute.scss';
 
 const HomeRoute = ({ photos, topics, favoritePhotos, toggleFavorite, openModal }) => {
   console.log("HomeRoute received openModal:", openModal); // Debugging log
-
+  console.log("photos:", photos);
   return (
     <div className="home-route">
       <TopNavigationBar 

@@ -1,4 +1,8 @@
 const pg = require("pg");
+require('dotenv').config({ path: __dirname + '/../../.env.development' });
+
+console.log("✅ PGUSER from .env:", process.env.PGUSER); 
+
 
 const client = new pg.Client({
   host: process.env.PGHOST,
