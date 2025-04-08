@@ -10,9 +10,11 @@ const App = () => {
     state,
     updateToFavPhotoIds,
     onPhotoSelect,
-    onClosePhotoDetailsModal
+    onClosePhotoDetailsModal,
+    fetchPhotosByTopic
+    
   } = useApplicationData();
-
+  console.log("Photos in state:", state.photos);
   return (
     <div className="App">
       <HomeRoute
@@ -21,8 +23,9 @@ const App = () => {
         favoritePhotos={state.favoritePhotos}
         toggleFavorite={updateToFavPhotoIds}
         openModal={onPhotoSelect}
+        fetchPhotosByTopic={fetchPhotosByTopic}
       />
-
+      
       {state.selectedPhoto && (
         <PhotoDetailsModal
           selectedPhoto={state.selectedPhoto}
@@ -30,8 +33,10 @@ const App = () => {
           favoritePhotos={state.favoritePhotos}
           toggleFavorite={updateToFavPhotoIds}
         />
+        
       )}
     </div>
+    
   );
 };
 

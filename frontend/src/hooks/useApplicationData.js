@@ -8,6 +8,8 @@ export const ACTIONS = {
   SET_TOPIC_DATA: 'SET_TOPIC_DATA',
   SELECT_PHOTO: 'SELECT_PHOTO',
   DISPLAY_PHOTO_DETAILS: 'DISPLAY_PHOTO_DETAILS'
+  
+
 };
 
 const initialState = {
@@ -16,6 +18,8 @@ const initialState = {
   photos: [],     // ✅ These are already in your state
   topics: []      // ✅ These too
 };
+
+
 
 function reducer(state, action) {
   switch (action.type) {
@@ -54,6 +58,9 @@ function reducer(state, action) {
         ...state,
         topics: action.payload.topics
       };
+
+  
+      
 
     default:
       throw new Error(`Unsupported action type: ${action.type}`);
@@ -99,12 +106,28 @@ const useApplicationData = () => {
   const onClosePhotoDetailsModal = () => {
     dispatch({ type: ACTIONS.DISPLAY_PHOTO_DETAILS });
   };
- 
+  
+
+  const fetchPhotosByTopic = (topicId) => {
+    axios.get(`/api/topics/${topicId}/photos`)
+      .then((res) => {
+        dispatch({
+          type: ACTIONS.SET_PHOTO_DATA,
+          payload: { photos: res.data }
+        });
+      })
+      .catch((err) => {
+        console.error("Failed to fetch topic photos:", err);
+      });
+  };
+
+  
   return {
     state,
     updateToFavPhotoIds,
     onPhotoSelect,
-    onClosePhotoDetailsModal
+    onClosePhotoDetailsModal,
+    fetchPhotosByTopic
   };
 };
 
