@@ -1,6 +1,7 @@
 import { useEffect, useReducer } from 'react';
 import axios from 'axios';
 
+// Action types for reducer
 export const ACTIONS = {
   FAV_PHOTO_ADDED: 'FAV_PHOTO_ADDED',
   FAV_PHOTO_REMOVED: 'FAV_PHOTO_REMOVED',
@@ -8,19 +9,17 @@ export const ACTIONS = {
   SET_TOPIC_DATA: 'SET_TOPIC_DATA',
   SELECT_PHOTO: 'SELECT_PHOTO',
   DISPLAY_PHOTO_DETAILS: 'DISPLAY_PHOTO_DETAILS'
-  
-
 };
 
+// Initial global state
 const initialState = {
   favoritePhotos: [],
   selectedPhoto: null,
-  photos: [],     // ✅ These are already in your state
-  topics: []      // ✅ These too
+  photos: [],
+  topics: []
 };
 
-
-
+// Reducer handles all state transitions
 function reducer(state, action) {
   switch (action.type) {
     case ACTIONS.FAV_PHOTO_ADDED:
@@ -59,9 +58,6 @@ function reducer(state, action) {
         topics: action.payload.topics
       };
 
-  
-      
-
     default:
       throw new Error(`Unsupported action type: ${action.type}`);
   }
@@ -70,18 +66,16 @@ function reducer(state, action) {
 const useApplicationData = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
+  // Fetch photos and topics when app first loads
   useEffect(() => {
-    // Fetch PHOTOS
     axios.get('/api/photos')
       .then((response) => {
-        console.log("Fetched photo data:", response.data);
         dispatch({ type: ACTIONS.SET_PHOTO_DATA, payload: { photos: response.data } });
       })
       .catch((error) => {
         console.error('Error fetching photos:', error);
       });
 
-    // Fetch TOPICS
     axios.get('/api/topics')
       .then((response) => {
         dispatch({ type: ACTIONS.SET_TOPIC_DATA, payload: { topics: response.data } });
@@ -91,6 +85,7 @@ const useApplicationData = () => {
       });
   }, []);
 
+  // Toggle photo as favorite or unfavorite
   const updateToFavPhotoIds = (photoId) => {
     const isFav = state.favoritePhotos.includes(photoId);
     dispatch({
@@ -99,15 +94,17 @@ const useApplicationData = () => {
     });
   };
 
+  // Open modal with selected photo
   const onPhotoSelect = (photo) => {
     dispatch({ type: ACTIONS.SELECT_PHOTO, payload: { photo } });
   };
 
+  // Close modal
   const onClosePhotoDetailsModal = () => {
     dispatch({ type: ACTIONS.DISPLAY_PHOTO_DETAILS });
   };
-  
 
+  // Fetch photos for a specific topic
   const fetchPhotosByTopic = (topicId) => {
     axios.get(`/api/topics/${topicId}/photos`)
       .then((res) => {
@@ -121,7 +118,6 @@ const useApplicationData = () => {
       });
   };
 
-  
   return {
     state,
     updateToFavPhotoIds,

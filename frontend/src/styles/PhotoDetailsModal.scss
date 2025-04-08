@@ -22,18 +22,19 @@
   border-radius: 12px;
   position: relative;
   padding-bottom: 24px;
+  position: relative;
 }
 
 .photo-details-modal__close-button {
-  background-color: white;
-  border: none;
-  font-size: 16px;
-  cursor: pointer;
-  margin: 16px;
   position: absolute;
-  top: 8px;
-  right: 8px;
+  top: 20px;
+  left: 20px; 
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  z-index: 10;
 }
+
 
 .photo-details-modal__images {
   display: flex;
