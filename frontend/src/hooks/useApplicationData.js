@@ -118,12 +118,35 @@ const useApplicationData = () => {
       });
   };
 
+  //Search photos by city or country
+  const onSearch = (searchTerm) => {
+    if (searchTerm.trim() === '') {
+      // If search is empty, fetch all photos
+      axios.get('/api/photos')
+        .then((response) => {
+          dispatch({ type: ACTIONS.SET_PHOTO_DATA, payload: { photos: response.data } });
+        });
+    } else {
+      // If search has text, call search endpoint
+      axios.get('/api/photos/search', {
+        params: { q: searchTerm }
+      })
+        .then((response) => {
+          dispatch({ type: ACTIONS.SET_PHOTO_DATA, payload: { photos: response.data } });
+        })
+        .catch((error) => {
+          console.error('Error searching photos:', error);
+        });
+    }
+  };
+
   return {
     state,
     updateToFavPhotoIds,
     onPhotoSelect,
     onClosePhotoDetailsModal,
-    fetchPhotosByTopic
+    fetchPhotosByTopic,
+    onSearch
   };
 };
 

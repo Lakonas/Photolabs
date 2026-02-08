@@ -8,6 +8,27 @@
   background-color: white;
 }
 
+/* NEW - Search input styling */
+.top-nav-bar__search {
+  padding: 8px 16px;
+  border: 2px solid #ddd;
+  border-radius: 20px;
+  font-size: 14px;
+  width: 250px;
+  margin-left: 24px;
+  outline: none;
+  transition: border-color 0.2s;
+
+  &:focus {
+    border-color: #333;
+  }
+
+  &::placeholder {
+    color: #999;
+  }
+}
+
+
 .top-nav-bar__logo {
   font-weight: 500;
   font-size: 24px;

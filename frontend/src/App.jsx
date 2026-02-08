@@ -10,9 +10,9 @@ const App = () => {
     updateToFavPhotoIds,
     onPhotoSelect,
     onClosePhotoDetailsModal,
-    fetchPhotosByTopic
+    fetchPhotosByTopic,
+    onSearch //Search
   } = useApplicationData();
-
   
 
   return (
@@ -25,6 +25,7 @@ const App = () => {
         toggleFavorite={updateToFavPhotoIds}
         openModal={onPhotoSelect}
         fetchPhotosByTopic={fetchPhotosByTopic}
+        onSearch={onSearch}
       />
 
       {/* Conditionally render the photo details modal if a photo is selected */}
