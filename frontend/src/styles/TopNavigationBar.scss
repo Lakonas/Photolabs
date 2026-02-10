@@ -60,3 +60,33 @@
   font-weight: bold;
   z-index: 10;
 }
+
+.top-nav-bar__user-section {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-left: auto;
+  margin-right: 16px;
+}
+
+.top-nav-bar__username {
+  font-size: 14px;
+  color: #555;
+  font-weight: 500;
+}
+
+.top-nav-bar__logout {
+  padding: 8px 16px;
+  background: #667eea;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+
+  &:hover {
+    background: #764ba2;
+  }
+}

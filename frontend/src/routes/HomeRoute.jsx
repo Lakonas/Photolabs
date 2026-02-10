@@ -11,7 +11,9 @@ const HomeRoute = ({
   toggleFavorite, 
   openModal, 
   fetchPhotosByTopic,
-  onSearch  
+  onSearch,
+  logout,  // ← ADD THIS
+  user     // ← ADD THIS
 }) => {
   return (
     <div className="home-route">
@@ -20,7 +22,9 @@ const HomeRoute = ({
         topics={topics} 
         favoritePhotos={favoritePhotos} 
         fetchPhotosByTopic={fetchPhotosByTopic} 
-        onSearch={onSearch}  // ← Now this works!
+        onSearch={onSearch}
+        logout={logout}  // ← ADD THIS
+        user={user}      // ← ADD THIS
       />
 
       {/* Main gallery of photos */}
