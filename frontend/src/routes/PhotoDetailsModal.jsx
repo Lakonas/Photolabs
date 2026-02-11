@@ -48,6 +48,20 @@ const PhotoDetailsModal = ({ selectedPhoto, closeModal, favoritePhotos, toggleFa
                 </div>
               </div>
             </div>
+
+            {/* Photo title (if available) */}
+            {selectedPhoto.title && (
+              <div className="photo-details-modal__title">
+                {selectedPhoto.title}
+              </div>
+            )}
+
+            {/* Photo description (if available) */}
+            {selectedPhoto.description && (
+              <div className="photo-details-modal__description">
+                {selectedPhoto.description}
+              </div>
+            )}
           </div>
 
           {/* Similar photos section */}
@@ -57,7 +71,7 @@ const PhotoDetailsModal = ({ selectedPhoto, closeModal, favoritePhotos, toggleFa
               photos={Object.values(selectedPhoto.similar_photos)}
               favoritePhotos={favoritePhotos}
               toggleFavorite={toggleFavorite}
-              openModal={() => {}} // Intentionally no-op
+              openModal={() => {}} 
             />
           </div>
         </div>

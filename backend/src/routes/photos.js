@@ -18,8 +18,8 @@ module.exports = db => {
     try {
       const { rows } = await db.query(`
         SELECT photo.id, photo.full_url, photo.regular_url, photo.city, 
-               photo.country, photo.topic_id, user_account.username, 
-               user_account.fullname, user_account.profile_url
+               photo.country, photo.topic_id, photo.title, photo.description,
+               user_account.username, user_account.fullname, user_account.profile_url
         FROM photo
         JOIN user_account ON user_account.id = photo.user_id
         ORDER BY photo.id;
@@ -47,7 +47,12 @@ module.exports = db => {
             name: photo.fullname,
             profile: formatPhotoUrl(photo.profile_url, serverUrl)
           },
-          location: { city: photo.city, country: photo.country },
+          location: { 
+            city: photo.city, 
+            country: photo.country 
+          },
+          title: photo.title,
+          description: photo.description,
           similar_photos: similarResult.rows.map(s => ({
             id: s.id,
             urls: {
@@ -59,7 +64,10 @@ module.exports = db => {
               name: s.fullname,
               profile: formatPhotoUrl(s.profile_url, serverUrl)
             },
-            location: { city: s.city, country: s.country }
+            location: { 
+              city: s.city, 
+              country: s.country 
+            }
           }))
         };
       }));
@@ -85,8 +93,8 @@ module.exports = db => {
     try {
       const { rows } = await db.query(`
         SELECT photo.id, photo.full_url, photo.regular_url, photo.city,
-               photo.country, photo.topic_id, user_account.username,
-               user_account.fullname, user_account.profile_url
+               photo.country, photo.topic_id, photo.title, photo.description,
+               user_account.username, user_account.fullname, user_account.profile_url
         FROM photo
         JOIN user_account ON user_account.id = photo.user_id
         WHERE LOWER(photo.city) LIKE LOWER($1) OR LOWER(photo.country) LIKE LOWER($1)
@@ -115,7 +123,12 @@ module.exports = db => {
             name: photo.fullname,
             profile: formatPhotoUrl(photo.profile_url, serverUrl)
           },
-          location: { city: photo.city, country: photo.country },
+          location: { 
+            city: photo.city, 
+            country: photo.country 
+          },
+          title: photo.title,
+          description: photo.description,
           similar_photos: similarResult.rows.map(s => ({
             id: s.id,
             urls: {
@@ -127,7 +140,10 @@ module.exports = db => {
               name: s.fullname,
               profile: formatPhotoUrl(s.profile_url, serverUrl)
             },
-            location: { city: s.city, country: s.country }
+            location: { 
+              city: s.city, 
+              country: s.country 
+            }
           }))
         };
       }));

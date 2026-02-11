@@ -10,7 +10,7 @@ const TopNavigationBar = ({
   onSearch,
   user,
   logout,
-  onUploadClick  // ← ADDED
+  onUploadClick  
 }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const hasFavorites = favoritePhotos.length > 0;

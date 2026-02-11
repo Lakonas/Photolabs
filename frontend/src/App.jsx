@@ -17,7 +17,7 @@ const App = () => {
     onSearch
   } = useApplicationData();
 
-  const { user, loading, logout, login, register } = useAuth();  // ← ADDED: login, register
+  const { user, loading, logout, login, register } = useAuth(); 
   const [showRegister, setShowRegister] = useState(false);
   const [showUpload, setShowUpload] = useState(false);
 
@@ -29,9 +29,9 @@ const App = () => {
   
   const handleUploadSuccess = (newPhoto) => {
     // Refresh photos to show the new upload
-    // We'll implement this properly in a moment
+    
     console.log('New photo uploaded:', newPhoto);
-    window.location.reload(); // Quick solution for now
+    window.location.reload(); 
   };
 
   // Show loading while checking auth
@@ -55,12 +55,12 @@ const App = () => {
     return showRegister ? (
       <RegisterForm 
         onSwitchToLogin={() => setShowRegister(false)}
-        register={register}  // ← ADDED: pass register prop
+        register={register}  
       />
     ) : (
       <LoginForm 
         onSwitchToRegister={() => setShowRegister(true)}
-        login={login}  // ← ADDED: pass login prop
+        login={login}  
       />
     );
   }
@@ -78,7 +78,7 @@ const App = () => {
         onSearch={onSearch}
         logout={logout}
         user={user}
-        onUploadClick={handleUploadClick}  // ← ADD THIS
+        onUploadClick={handleUploadClick}  
       />
 
       {state.selectedPhoto && (

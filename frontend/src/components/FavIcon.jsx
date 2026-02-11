@@ -9,7 +9,7 @@ const FavIcon = ({ displayAlert }) => {
         viewBox="0 0 24 24"
         width="24"
         height="24"
-        fill={displayAlert ? 'red' : 'black'} // Red fill if alert is active
+        fill={displayAlert ? 'red' : 'red'} // Red fill if alert is active
       >
         {/* Heart icon path */}
         <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 
