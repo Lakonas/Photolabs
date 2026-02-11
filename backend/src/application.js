@@ -13,6 +13,7 @@ const db = require("./db")
 const photos = require("./routes/photos");
 const topics = require("./routes/topics");
 const auth = require("./routes/auth");
+const upload = require("./routes/upload");
 
 function read(file) {
   return new Promise((resolve, reject) => {
@@ -40,6 +41,7 @@ module.exports = function application(
   app.use("/api", photos(db));
   app.use("/api", topics(db));
   app.use("/api", auth(db));
+  app.use("/api", upload(db));
 
   if (ENV === "development" || ENV === "test") {
     Promise.all([

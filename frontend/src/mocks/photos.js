@@ -1,264 +1,143 @@
-const photo1 = {
-  id: 1,
-  location: {
-    city: "Montreal",
-    country: "Canada"
-  },
-  urls: {
-    full: "/Image-1-Full.jpeg",
-    regular: "/Image-1-Regular.jpeg"
-  },
-  user: {
-    username: "exampleuser",
-    name: "Joe Example",
-    profile: "/profile-1.jpg"
-  }
-};
+const router = require("express").Router();
 
-const photo2 = {
-  id: 2,
-  location: {
-    city: "Toronto",
-    country: "Canada"
-  },
-  urls: {
-    full: "/Image-2-Full.jpeg",
-    regular: "/Image-2-Regular.jpeg"
-  },
-  user: {
-    username: "exampleuser",
-    name: "Joe Example",
-    profile: "/profile-1.jpg"
-  }
-};
-
-const photo3 = {
-  id: 3,
-  location: {
-    city: "Ottawa",
-    country: "Canada"
-  },
-  urls: {
-    full: "/Image-3-Full.jpeg",
-    regular: "/Image-3-Regular.jpeg"
-  },
-  user: {
-    username: "exampleuser",
-    name: "Joe Example",
-    profile: "/profile-1.jpg"
-  }
-};
-
-const photo4 = {
-  id: 4,
-  location: {
-    city: "Quebec",
-    country: "Canada"
-  },
-  urls: {
-    full: "/Image-4-Full.jpg",
-    regular: "/Image-4-Regular.jpg"
-  },
-  user: {
-    username: "exampleuser",
-    name: "Joe Example",
-    profile: "/profile-1.jpg"
-  }
-};
-
-const photo5 = {
-  id: 5,
-  location: {
-    city: "Vancouver",
-    country: "Canada"
-  },
-  urls: {
-    full: "/Image-5-Full.jpg",
-    regular: "/Image-5-Regular.jpg"
-  },
-  user: {
-    username: "exampleuser",
-    name: "Joe Example",
-    profile: "/profile-1.jpg"
-  }
-};
-
-const photo6 = {
-  id: 6,
-  location: {
-    city: "Montreal",
-    country: "Canada"
-  },
-  urls: {
-    full: "/Image-6-Full.jpg",
-    regular: "/Image-6-Regular.jpg"
-  },
-  user: {
-    username: "exampleuser",
-    name: "Joe Example",
-    profile: "/profile-1.jpg"
-  }
-};
-
-const photo7 = {
-  id: 7,
-  location: {
-    city: "Calgary",
-    country: "Canada"
-  },
-  urls: {
-    full: "/Image-7-Full.jpg",
-    regular: "/Image-7-Regular.jpg"
-  },
-  user: {
-    username: "exampleuser",
-    name: "Joe Example",
-    profile: "/profile-1.jpg"
-  }
-};
-
-const photo8 = {
-  id: 8,
-  location: {
-    city: "Ottawa",
-    country: "Canada"
-  },
-  urls: {
-    full: "/Image-8-Full.jpg",
-    regular: "/Image-8-Regular.jpg"
-  },
-  user: {
-    username: "exampleuser",
-    name: "Joe Example",
-    profile: "/profile-1.jpg"
-  }
-};
-
-const photo9 = {
-  id: 9,
-  location: {
-    city: "Nova Scotia",
-    country: "Canada"
-  },
-  urls: {
-    full: "/Image-9-Full.jpg",
-    regular: "/Image-9-Regular.jpg"
-  },
-  user: {
-    username: "exampleuser",
-    name: "Joe Example",
-    profile: "/profile-1.jpg"
-  }
-};
-
-const photo10 = {
-  id: 10,
-  location: {
-    city: "Edmonton",
-    country: "Canada"
-  },
-  urls: {
-    full: "/Image-10-Full.jpg",
-    regular: "/Image-10-Regular.jpg"
-  },
-  user: {
-    username: "exampleuser",
-    name: "Joe Example",
-    profile: "/profile-1.jpg"
-  }
-};
-
-const photos = [
-  {
-    ...photo1,
-    similar_photos: {
-      photo2,
-      photo3,
-      photo4,
-      photo5,
+module.exports = db => {
+  // Helper function to format photo URL
+  const formatPhotoUrl = (url, serverUrl) => {
+    if (url.startsWith('http://') || url.startsWith('https://')) {
+      return url;
     }
-  },
-  {
-    ...photo2,
-    similar_photos: {
-      photo2,
-      photo3,
-      photo4,
-      photo5,
-    }
-  },
-  {
-    ...photo3,
-    similar_photos: {
-      photo2,
-      photo3,
-      photo4,
-      photo5,
-    }
-  },
-  {
-    ...photo4,
-    similar_photos: {
-      photo2,
-      photo3,
-      photo4,
-      photo5,
-    }
-  },
-  {
-    ...photo5,
-    similar_photos: {
-      photo2,
-      photo3,
-      photo4,
-      photo5,
-    }
-  },
-  {
-    ...photo6,
-    similar_photos: {
-      photo2,
-      photo3,
-      photo4,
-      photo5,
-    }
-  },
-  {
-    ...photo7,
-    similar_photos: {
-      photo2,
-      photo3,
-      photo4,
-      photo5,
-    }
-  },
-  {
-    ...photo8,
-    similar_photos: {
-      photo2,
-      photo3,
-      photo4,
-      photo5,
-    }
-  },
-  {
-    ...photo9,
-    similar_photos: {
-      photo2,
-      photo3,
-      photo4,
-      photo5,
-    }
-  },
-  {
-    ...photo10,
-    similar_photos: {
-      photo2,
-      photo3,
-      photo4,
-      photo5,
-    }
-  }
-];
+    return `${serverUrl}/images/${url}`;
+  };
 
-export default photos;
+  router.get("/photos", async (req, res) => {
+    const protocol = req.protocol;
+    const host = req.hostname;
+    const port = process.env.PORT || 8001;
+    const serverUrl = `${protocol}://${host}:${port}`;
+
+    try {
+      const { rows } = await db.query(`
+        SELECT photo.id, photo.full_url, photo.regular_url, photo.city, 
+               photo.country, photo.topic_id, user_account.username, 
+               user_account.fullname, user_account.profile_url
+        FROM photo
+        JOIN user_account ON user_account.id = photo.user_id
+        ORDER BY photo.id;
+      `);
+
+      const photosWithSimilar = await Promise.all(rows.map(async (photo) => {
+        const similarResult = await db.query(`
+          SELECT similar_photo.id, similar_photo.full_url, similar_photo.regular_url,
+                 similar_photo.city, similar_photo.country, similar_user.username,
+                 similar_user.fullname, similar_user.profile_url
+          FROM photo AS similar_photo
+          JOIN user_account AS similar_user ON similar_user.id = similar_photo.user_id
+          WHERE similar_photo.id <> $1 AND similar_photo.topic_id = $2
+          LIMIT 4
+        `, [photo.id, photo.topic_id]);
+
+        return {
+          id: photo.id,
+          urls: {
+            full: formatPhotoUrl(photo.full_url, serverUrl),
+            regular: formatPhotoUrl(photo.regular_url, serverUrl)
+          },
+          user: {
+            username: photo.username,
+            name: photo.fullname,
+            profile: formatPhotoUrl(photo.profile_url, serverUrl)
+          },
+          location: { city: photo.city, country: photo.country },
+          similar_photos: similarResult.rows.map(s => ({
+            id: s.id,
+            urls: {
+              full: formatPhotoUrl(s.full_url, serverUrl),
+              regular: formatPhotoUrl(s.regular_url, serverUrl)
+            },
+            user: {
+              username: s.username,
+              name: s.fullname,
+              profile: formatPhotoUrl(s.profile_url, serverUrl)
+            },
+            location: { city: s.city, country: s.country }
+          }))
+        };
+      }));
+
+      res.json(photosWithSimilar);
+    } catch (err) {
+      console.error('Photos error:', err);
+      res.status(500).json({ error: 'Failed to fetch photos' });
+    }
+  });
+
+  router.get("/photos/search", async (req, res) => {
+    const searchTerm = req.query.q;
+    const protocol = req.protocol;
+    const host = req.hostname;
+    const port = process.env.PORT || 8001;
+    const serverUrl = `${protocol}://${host}:${port}`;
+
+    if (!searchTerm || searchTerm.trim() === '') {
+      return res.json([]);
+    }
+
+    try {
+      const { rows } = await db.query(`
+        SELECT photo.id, photo.full_url, photo.regular_url, photo.city,
+               photo.country, photo.topic_id, user_account.username,
+               user_account.fullname, user_account.profile_url
+        FROM photo
+        JOIN user_account ON user_account.id = photo.user_id
+        WHERE LOWER(photo.city) LIKE LOWER($1) OR LOWER(photo.country) LIKE LOWER($1)
+        ORDER BY photo.id;
+      `, [`%${searchTerm}%`]);
+
+      const photosWithSimilar = await Promise.all(rows.map(async (photo) => {
+        const similarResult = await db.query(`
+          SELECT similar_photo.id, similar_photo.full_url, similar_photo.regular_url,
+                 similar_photo.city, similar_photo.country, similar_user.username,
+                 similar_user.fullname, similar_user.profile_url
+          FROM photo AS similar_photo
+          JOIN user_account AS similar_user ON similar_user.id = similar_photo.user_id
+          WHERE similar_photo.id <> $1 AND similar_photo.topic_id = $2
+          LIMIT 4
+        `, [photo.id, photo.topic_id]);
+
+        return {
+          id: photo.id,
+          urls: {
+            full: formatPhotoUrl(photo.full_url, serverUrl),
+            regular: formatPhotoUrl(photo.regular_url, serverUrl)
+          },
+          user: {
+            username: photo.username,
+            name: photo.fullname,
+            profile: formatPhotoUrl(photo.profile_url, serverUrl)
+          },
+          location: { city: photo.city, country: photo.country },
+          similar_photos: similarResult.rows.map(s => ({
+            id: s.id,
+            urls: {
+              full: formatPhotoUrl(s.full_url, serverUrl),
+              regular: formatPhotoUrl(s.regular_url, serverUrl)
+            },
+            user: {
+              username: s.username,
+              name: s.fullname,
+              profile: formatPhotoUrl(s.profile_url, serverUrl)
+            },
+            location: { city: s.city, country: s.country }
+          }))
+        };
+      }));
+
+      res.json(photosWithSimilar);
+    } catch (err) {
+      console.error('Search error:', err);
+      res.status(500).json({ error: 'Search failed' });
+    }
+  });
+
+  return router;
+};

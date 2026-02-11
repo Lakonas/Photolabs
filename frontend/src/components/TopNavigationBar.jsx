@@ -9,7 +9,8 @@ const TopNavigationBar = ({
   fetchPhotosByTopic, 
   onSearch,
   user,
-  logout
+  logout,
+  onUploadClick  // ← ADDED
 }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const hasFavorites = favoritePhotos.length > 0;
@@ -31,6 +32,14 @@ const TopNavigationBar = ({
         value={searchTerm}
         onChange={handleSearchChange}
       />
+
+      {/* ← ADDED UPLOAD BUTTON */}
+      <button 
+        className="top-nav-bar__upload"
+        onClick={onUploadClick}
+      >
+        + Upload Photo
+      </button>
 
       <TopicList
         topics={topics}

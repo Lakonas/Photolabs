@@ -5,6 +5,7 @@ import useApplicationData from './hooks/useApplicationData';
 import useAuth from './hooks/useAuth';
 import LoginForm from './components/LoginForm';
 import RegisterForm from './components/RegisterForm';
+import PhotoUploadForm from './components/PhotoUploadForm';
 
 const App = () => {
   const {
@@ -18,8 +19,20 @@ const App = () => {
 
   const { user, loading, logout, login, register } = useAuth();  // ← ADDED: login, register
   const [showRegister, setShowRegister] = useState(false);
+  const [showUpload, setShowUpload] = useState(false);
 
   console.log('🟣 App rendered! user:', user, 'loading:', loading); 
+
+  const handleUploadClick = () => {
+    setShowUpload(true);
+  };
+  
+  const handleUploadSuccess = (newPhoto) => {
+    // Refresh photos to show the new upload
+    // We'll implement this properly in a moment
+    console.log('New photo uploaded:', newPhoto);
+    window.location.reload(); // Quick solution for now
+  };
 
   // Show loading while checking auth
   if (loading) {
@@ -56,16 +69,17 @@ const App = () => {
   return (
     <div className="App">
      <HomeRoute
-      photos={state.photos}
-      topics={state.topics}
-      favoritePhotos={state.favoritePhotos}
-      toggleFavorite={updateToFavPhotoIds}
-      openModal={onPhotoSelect}
-      fetchPhotosByTopic={fetchPhotosByTopic}
-      onSearch={onSearch}
-      logout={logout}
-      user={user}
-     />
+        photos={state.photos}
+        topics={state.topics}
+        favoritePhotos={state.favoritePhotos}
+        toggleFavorite={updateToFavPhotoIds}
+        openModal={onPhotoSelect}
+        fetchPhotosByTopic={fetchPhotosByTopic}
+        onSearch={onSearch}
+        logout={logout}
+        user={user}
+        onUploadClick={handleUploadClick}  // ← ADD THIS
+      />
 
       {state.selectedPhoto && (
         <PhotoDetailsModal
@@ -73,6 +87,13 @@ const App = () => {
           closeModal={onClosePhotoDetailsModal}
           favoritePhotos={state.favoritePhotos}
           toggleFavorite={updateToFavPhotoIds}
+        />
+      )}
+      {showUpload && (
+        <PhotoUploadForm
+          topics={state.topics}
+          onClose={() => setShowUpload(false)}
+          onUploadSuccess={handleUploadSuccess}
         />
       )}
     </div>
