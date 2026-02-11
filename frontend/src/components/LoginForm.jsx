@@ -25,6 +25,18 @@ const LoginForm = ({ onSwitchToRegister, login }) => {
     }
   };
 
+  const handleDemoLogin = async () => {
+    setError('');
+    setLoading(true);
+  
+    const result = await login('demo@photolabs.com', 'demo123');
+  
+    if (!result.success) {
+      setError(result.error);
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="login-form-container">
       <div className="login-form-card">
@@ -73,6 +85,15 @@ const LoginForm = ({ onSwitchToRegister, login }) => {
           </button>
         </form>
 
+          <button 
+              type="button"
+              className="demo-button"
+              onClick={handleDemoLogin}
+              disabled={loading}
+        >
+          🎭 Demo Login
+        </button>
+
         <div className="switch-form">
           Don't have an account?{' '}
           <button 
@@ -81,6 +102,10 @@ const LoginForm = ({ onSwitchToRegister, login }) => {
           >
             Sign up
           </button>
+        </div>
+        <div className="demo-info">
+          <p>Demo Account:</p>
+          <p><strong>demo@photolabs.com</strong> / <strong>demo123</strong></p>
         </div>
       </div>
     </div>
