@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import '../styles/PhotoUploadForm.scss';
 
+const API_URL = import.meta.env.VITE_API_URL || '';
+
 const PhotoUploadForm = ({ topics, onClose, onUploadSuccess }) => {
   const [file, setFile] = useState(null);
   const [preview, setPreview] = useState(null);
@@ -18,13 +20,11 @@ const PhotoUploadForm = ({ topics, onClose, onUploadSuccess }) => {
     const selectedFile = e.target.files[0];
     
     if (selectedFile) {
-      // Validate file type
       if (!selectedFile.type.startsWith('image/')) {
         setError('Please select an image file');
         return;
       }
 
-      // Validate file size (5MB)
       if (selectedFile.size > 5 * 1024 * 1024) {
         setError('File size must be less than 5MB');
         return;
@@ -33,7 +33,6 @@ const PhotoUploadForm = ({ topics, onClose, onUploadSuccess }) => {
       setFile(selectedFile);
       setError('');
 
-      // Create preview
       const reader = new FileReader();
       reader.onloadend = () => {
         setPreview(reader.result);
@@ -64,7 +63,7 @@ const PhotoUploadForm = ({ topics, onClose, onUploadSuccess }) => {
       const base64Image = await fileToBase64(file);
       const token = localStorage.getItem('token');
 
-      const response = await fetch('/api/ai/describe', {
+      const response = await fetch(`${API_URL}/api/ai/describe`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -114,7 +113,7 @@ const PhotoUploadForm = ({ topics, onClose, onUploadSuccess }) => {
 
       const token = localStorage.getItem('token');
 
-      const response = await fetch('/api/upload', {
+      const response = await fetch(`${API_URL}/api/upload`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`
@@ -128,7 +127,6 @@ const PhotoUploadForm = ({ topics, onClose, onUploadSuccess }) => {
         throw new Error(data.error || 'Upload failed');
       }
 
-      // Success!
       onUploadSuccess(data.photo);
       onClose();
 
@@ -150,7 +148,6 @@ const PhotoUploadForm = ({ topics, onClose, onUploadSuccess }) => {
           <div className="error-message">{error}</div>
         )}
 
-        {/* Tab Navigation */}
         <div className="upload-tabs">
           <button
             type="button"
@@ -171,7 +168,6 @@ const PhotoUploadForm = ({ topics, onClose, onUploadSuccess }) => {
         <form onSubmit={handleSubmit} className="upload-form">
           {activeTab === 'upload' ? (
             <>
-              {/* File Input */}
               <div className="form-group">
                 <label>Photo *</label>
                 <input
@@ -187,7 +183,6 @@ const PhotoUploadForm = ({ topics, onClose, onUploadSuccess }) => {
                 )}
               </div>
 
-              {/* Title */}
               <div className="form-group">
                 <label htmlFor="title">Title *</label>
                 <input
@@ -201,7 +196,6 @@ const PhotoUploadForm = ({ topics, onClose, onUploadSuccess }) => {
                 />
               </div>
 
-              {/* Description */}
               <div className="form-group">
                 <label htmlFor="description">Description</label>
                 <textarea
@@ -222,7 +216,6 @@ const PhotoUploadForm = ({ topics, onClose, onUploadSuccess }) => {
                 </button>
               </div>
 
-              {/* City */}
               <div className="form-row">
                 <div className="form-group">
                   <label htmlFor="city">City *</label>
@@ -237,7 +230,6 @@ const PhotoUploadForm = ({ topics, onClose, onUploadSuccess }) => {
                   />
                 </div>
 
-                {/* Country */}
                 <div className="form-group">
                   <label htmlFor="country">Country *</label>
                   <input
@@ -252,7 +244,6 @@ const PhotoUploadForm = ({ topics, onClose, onUploadSuccess }) => {
                 </div>
               </div>
 
-              {/* Topic */}
               <div className="form-group">
                 <label htmlFor="topic">Topic *</label>
                 <select
@@ -271,7 +262,6 @@ const PhotoUploadForm = ({ topics, onClose, onUploadSuccess }) => {
                 </select>
               </div>
 
-              {/* Submit Button */}
               <div className="form-actions">
                 <button
                   type="button"

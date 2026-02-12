@@ -1,6 +1,8 @@
 import { useEffect, useReducer } from 'react';
 import axios from 'axios';
 
+const API_URL = import.meta.env.VITE_API_URL || '';
+
 // Action types for reducer
 export const ACTIONS = {
   FAV_PHOTO_ADDED: 'FAV_PHOTO_ADDED',
@@ -68,7 +70,7 @@ const useApplicationData = () => {
 
   // Fetch photos and topics when app first loads
   useEffect(() => {
-    axios.get('/api/photos')
+    axios.get(`${API_URL}/api/photos`)
       .then((response) => {
         dispatch({ type: ACTIONS.SET_PHOTO_DATA, payload: { photos: response.data } });
       })
@@ -76,7 +78,7 @@ const useApplicationData = () => {
         console.error('Error fetching photos:', error);
       });
 
-    axios.get('/api/topics')
+    axios.get(`${API_URL}/api/topics`)
       .then((response) => {
         dispatch({ type: ACTIONS.SET_TOPIC_DATA, payload: { topics: response.data } });
       })
@@ -106,7 +108,7 @@ const useApplicationData = () => {
 
   // Fetch photos for a specific topic
   const fetchPhotosByTopic = (topicId) => {
-    axios.get(`/api/topics/${topicId}/photos`)
+    axios.get(`${API_URL}/api/topics/${topicId}/photos`)
       .then((res) => {
         dispatch({
           type: ACTIONS.SET_PHOTO_DATA,
@@ -122,13 +124,13 @@ const useApplicationData = () => {
   const onSearch = (searchTerm) => {
     if (searchTerm.trim() === '') {
       // If search is empty, fetch all photos
-      axios.get('/api/photos')
+      axios.get(`${API_URL}/api/photos`)
         .then((response) => {
           dispatch({ type: ACTIONS.SET_PHOTO_DATA, payload: { photos: response.data } });
         });
     } else {
       // If search has text, call search endpoint
-      axios.get('/api/photos/search', {
+      axios.get(`${API_URL}/api/photos/search`, {
         params: { q: searchTerm }
       })
         .then((response) => {
