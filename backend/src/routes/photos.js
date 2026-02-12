@@ -156,8 +156,3 @@ module.exports = db => {
 
   return router;
 };
-```
-
-
-```
-g
