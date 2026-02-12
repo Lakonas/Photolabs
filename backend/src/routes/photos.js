@@ -1,7 +1,12 @@
 const router = require("express").Router();
 
 module.exports = db => {
-  // Helper function to format photo URL
+  const getServerUrl = (req) => {
+    const protocol = req.headers['x-forwarded-proto'] || req.protocol;
+    const host = req.get('host');
+    return `${protocol}://${host}`;
+  };
+
   const formatPhotoUrl = (url, serverUrl) => {
     if (url.startsWith('http://') || url.startsWith('https://')) {
       return url;
@@ -10,10 +15,7 @@ module.exports = db => {
   };
 
   router.get("/photos", async (req, res) => {
-    const protocol = req.protocol;
-    const host = req.hostname;
-    const port = process.env.PORT || 8001;
-    const serverUrl = `${protocol}://${host}:${port}`;
+    const serverUrl = getServerUrl(req);
 
     try {
       const { rows } = await db.query(`
@@ -80,11 +82,8 @@ module.exports = db => {
   });
 
   router.get("/photos/search", async (req, res) => {
+    const serverUrl = getServerUrl(req);
     const searchTerm = req.query.q;
-    const protocol = req.protocol;
-    const host = req.hostname;
-    const port = process.env.PORT || 8001;
-    const serverUrl = `${protocol}://${host}:${port}`;
 
     if (!searchTerm || searchTerm.trim() === '') {
       return res.json([]);
@@ -157,3 +156,8 @@ module.exports = db => {
 
   return router;
 };
+```
+
+
+```
+g
