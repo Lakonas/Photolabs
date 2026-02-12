@@ -34,8 +34,17 @@ function read(file) {
 module.exports = function application(
   ENV,
 ) {
-  app.use(cors());
-  app.use(helmet());
+  app.use(cors({
+    origin: [
+      'https://photolabs-sand.vercel.app',
+      'https://photolabs-git-master-bills-projects-1cd88e02.vercel.app',
+      'http://localhost:5173'
+    ],
+    credentials: true
+  }));
+  app.use(helmet({
+    crossOriginResourcePolicy: { policy: "cross-origin" }
+  }));
   app.use(bodyparser.json({ limit: '10mb' }));
   app.use(express.static(path.join(__dirname, 'public')));
 
