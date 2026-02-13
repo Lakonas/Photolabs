@@ -1,6 +1,12 @@
 const router = require("express").Router();
 
 module.exports = db => {
+  const getServerUrl = (req) => {
+    const protocol = req.headers['x-forwarded-proto'] || req.protocol;
+    const host = req.get('host');
+    return `${protocol}://${host}`;
+  };
+
   router.get("/topics", (request, response) => {
     db.query(`
       SELECT 
@@ -14,10 +20,8 @@ module.exports = db => {
   });
   
   router.get("/topics/:id/photos", (request, response) => {
-    const protocol = request.protocol;
-    const host = request.hostname;
-    const port = process.env.PORT || 8001;
-    const serverUrl = `${protocol}://${host}:${port}`;
+    const serverUrl = getServerUrl(request);
+    const imageBase = `${serverUrl}/images/`;
 
     db.query(`
     SELECT 
@@ -25,13 +29,13 @@ module.exports = db => {
           json_build_object(
           'id', photo.id,
           'urls', json_build_object(
-            'full', concat('${serverUrl}/images/', photo.full_url),
-            'regular', concat('${serverUrl}/images/', photo.regular_url)
+            'full', CASE WHEN photo.full_url LIKE 'http%' THEN photo.full_url ELSE concat($2, photo.full_url) END,
+            'regular', CASE WHEN photo.regular_url LIKE 'http%' THEN photo.regular_url ELSE concat($2, photo.regular_url) END
           ),
           'user', json_build_object(
             'username', user_account.username,
             'name', user_account.fullname,
-            'profile', concat('${serverUrl}/images/', user_account.profile_url)
+            'profile', CASE WHEN user_account.profile_url LIKE 'http%' THEN user_account.profile_url ELSE concat($2, user_account.profile_url) END
           ),
           'location', json_build_object(
             'city', photo.city,
@@ -43,13 +47,13 @@ module.exports = db => {
                 json_build_object(
                   'id', similar_photo.id,
                   'urls', json_build_object(
-                    'full', concat('${serverUrl}/images/', similar_photo.full_url),
-                    'regular', concat('${serverUrl}/images/', similar_photo.regular_url)
+                    'full', CASE WHEN similar_photo.full_url LIKE 'http%' THEN similar_photo.full_url ELSE concat($2, similar_photo.full_url) END,
+                    'regular', CASE WHEN similar_photo.regular_url LIKE 'http%' THEN similar_photo.regular_url ELSE concat($2, similar_photo.regular_url) END
                   ),
                   'user', json_build_object(
                     'username', similar_user_account.username,
                     'name', similar_user_account.fullname,
-                    'profile', concat('${serverUrl}/images/', similar_user_account.profile_url)
+                    'profile', CASE WHEN similar_user_account.profile_url LIKE 'http%' THEN similar_user_account.profile_url ELSE concat($2, similar_user_account.profile_url) END
                   ),
                   'location', json_build_object(
                     'city', similar_photo.city,
@@ -68,8 +72,8 @@ module.exports = db => {
       FROM topic
       JOIN photo ON photo.topic_id = topic.id
       JOIN user_account ON user_account.id = photo.user_id
-      WHERE topic.id = ${request.params.id}
-    `).then(({ rows }) => {
+      WHERE topic.id = $1
+    `, [request.params.id, imageBase]).then(({ rows }) => {
       response.json(rows[0].topic_photo_data);
     });
   });
