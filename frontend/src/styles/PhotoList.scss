@@ -15,9 +15,10 @@
 
 @media (max-width: 768px) {
   .photo-list {
-    justify-content: center;
-    gap: 4px;
-    padding: 0 4px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    padding: 8px;
   }
 
   .photo-list:after {
