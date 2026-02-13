@@ -40,3 +40,38 @@ div.photo-list__item {
     }
   }
 }
+
+@media (max-width: 768px) {
+  div.photo-list__item {
+    margin: 8px auto;
+    width: calc(50% - 20px);
+
+    img.photo-list__image {
+      width: 100%;
+      height: 150px;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  div.photo-list__item {
+    width: calc(50% - 12px);
+    padding: 4px;
+
+    img.photo-list__image {
+      width: 100%;
+      height: 120px;
+    }
+
+    div.photo-list__user-details {
+      img.photo-list__user-profile {
+        width: 28px;
+        height: 28px;
+      }
+
+      div.photo-list__user-info {
+        font-size: 10px;
+      }
+    }
+  }
+}
