@@ -113,3 +113,34 @@
     transform: translateY(0);
   }
 }
+
+@media (max-width: 768px) {
+  .top-nav-bar {
+    flex-wrap: wrap;
+    height: auto;
+    padding: 8px 12px;
+    gap: 8px;
+  }
+
+  .top-nav-bar__search {
+    width: 100%;
+    margin-left: 0;
+    order: 2;
+  }
+
+  .top-nav-bar__topic-list {
+    width: 100%;
+    margin-left: 0;
+    overflow-x: auto;
+    order: 3;
+    gap: 12px;
+  }
+
+  .top-nav-bar__upload {
+    margin-left: 8px;
+  }
+
+  .top-nav-bar__user-section {
+    margin-right: 0;
+  }
+}
