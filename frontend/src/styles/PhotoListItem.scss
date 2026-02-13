@@ -1,3 +1,7 @@
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
 div.photo-list__item {
   margin: 24px;
   margin-top: auto;
