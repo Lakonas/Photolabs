@@ -53,8 +53,9 @@ div.photo-list__item {
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 768px) {
   div.photo-list__item {
+    margin: 4px;
     width: calc(50% - 12px);
     padding: 4px;
 
