@@ -7,6 +7,13 @@ module.exports = db => {
     return `${protocol}://${host}`;
   };
 
+  const formatUrl = (url, imageBase) => {
+    if (url && (url.startsWith('http://') || url.startsWith('https://'))) {
+      return url;
+    }
+    return `${imageBase}${url}`;
+  };
+
   router.get("/topics", (request, response) => {
     db.query(`
       SELECT 
@@ -19,63 +26,71 @@ module.exports = db => {
     });
   });
   
-  router.get("/topics/:id/photos", (request, response) => {
+  router.get("/topics/:id/photos", async (request, response) => {
     const serverUrl = getServerUrl(request);
     const imageBase = `${serverUrl}/images/`;
 
-    db.query(`
-    SELECT 
-      json_agg(
-          json_build_object(
-          'id', photo.id,
-          'urls', json_build_object(
-            'full', CASE WHEN photo.full_url LIKE 'http%' THEN photo.full_url ELSE concat($2, photo.full_url) END,
-            'regular', CASE WHEN photo.regular_url LIKE 'http%' THEN photo.regular_url ELSE concat($2, photo.regular_url) END
-          ),
-          'user', json_build_object(
-            'username', user_account.username,
-            'name', user_account.fullname,
-            'profile', CASE WHEN user_account.profile_url LIKE 'http%' THEN user_account.profile_url ELSE concat($2, user_account.profile_url) END
-          ),
-          'location', json_build_object(
-            'city', photo.city,
-            'country', photo.country
-          ),
-          'similar_photos', (
-            SELECT 
-              json_agg(
-                json_build_object(
-                  'id', similar_photo.id,
-                  'urls', json_build_object(
-                    'full', CASE WHEN similar_photo.full_url LIKE 'http%' THEN similar_photo.full_url ELSE concat($2, similar_photo.full_url) END,
-                    'regular', CASE WHEN similar_photo.regular_url LIKE 'http%' THEN similar_photo.regular_url ELSE concat($2, similar_photo.regular_url) END
-                  ),
-                  'user', json_build_object(
-                    'username', similar_user_account.username,
-                    'name', similar_user_account.fullname,
-                    'profile', CASE WHEN similar_user_account.profile_url LIKE 'http%' THEN similar_user_account.profile_url ELSE concat($2, similar_user_account.profile_url) END
-                  ),
-                  'location', json_build_object(
-                    'city', similar_photo.city,
-                    'country', similar_photo.country
-                  )
-                )
-              )
-            FROM photo AS similar_photo
-            JOIN user_account AS similar_user_account ON similar_user_account.id = similar_photo.user_id
-            WHERE similar_photo.id <> photo.id
-            AND similar_photo.topic_id = photo.topic_id
-            LIMIT 4
-          )
-        )
-      ) as topic_photo_data
-      FROM topic
-      JOIN photo ON photo.topic_id = topic.id
-      JOIN user_account ON user_account.id = photo.user_id
-      WHERE topic.id = $1
-    `, [request.params.id, imageBase]).then(({ rows }) => {
-      response.json(rows[0].topic_photo_data);
-    });
+    try {
+      const { rows } = await db.query(`
+        SELECT photo.id, photo.full_url, photo.regular_url, photo.city,
+               photo.country, photo.topic_id,
+               user_account.username, user_account.fullname, user_account.profile_url
+        FROM photo
+        JOIN user_account ON user_account.id = photo.user_id
+        WHERE photo.topic_id = $1
+        ORDER BY photo.id
+      `, [request.params.id]);
+
+      const photos = await Promise.all(rows.map(async (photo) => {
+        const similarResult = await db.query(`
+          SELECT similar_photo.id, similar_photo.full_url, similar_photo.regular_url,
+                 similar_photo.city, similar_photo.country,
+                 similar_user.username, similar_user.fullname, similar_user.profile_url
+          FROM photo AS similar_photo
+          JOIN user_account AS similar_user ON similar_user.id = similar_photo.user_id
+          WHERE similar_photo.id <> $1 AND similar_photo.topic_id = $2
+          LIMIT 4
+        `, [photo.id, photo.topic_id]);
+
+        return {
+          id: photo.id,
+          urls: {
+            full: formatUrl(photo.full_url, imageBase),
+            regular: formatUrl(photo.regular_url, imageBase)
+          },
+          user: {
+            username: photo.username,
+            name: photo.fullname,
+            profile: formatUrl(photo.profile_url, imageBase)
+          },
+          location: {
+            city: photo.city,
+            country: photo.country
+          },
+          similar_photos: similarResult.rows.map(s => ({
+            id: s.id,
+            urls: {
+              full: formatUrl(s.full_url, imageBase),
+              regular: formatUrl(s.regular_url, imageBase)
+            },
+            user: {
+              username: s.username,
+              name: s.fullname,
+              profile: formatUrl(s.profile_url, imageBase)
+            },
+            location: {
+              city: s.city,
+              country: s.country
+            }
+          }))
+        };
+      }));
+
+      response.json(photos);
+    } catch (err) {
+      console.error('Topic photos error:', err);
+      response.status(500).json({ error: 'Failed to fetch topic photos' });
+    }
   });
 
   return router;
